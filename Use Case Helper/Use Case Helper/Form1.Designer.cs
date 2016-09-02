@@ -56,6 +56,7 @@
             this.Controls.Add(this.pictureBox_Main);
             this.Name = "Form_Main";
             this.Text = "Use Case Helper";
+            this.LocationChanged += new System.EventHandler(this.Form_Main_LocationChanged);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Main)).EndInit();
             this.ResumeLayout(false);
 

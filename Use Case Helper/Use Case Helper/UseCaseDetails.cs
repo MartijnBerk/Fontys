@@ -27,7 +27,7 @@ namespace Use_Case_Helper
 
             usecase = objUsecase;
             originalName = usecase.Name;
-            textBox_Name.Text = originalName;
+            textBox_Name.Text = usecase.Name;
         }
 
         private void textBox_Name_TextChanged(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace Use_Case_Helper
 
         private void UseCaseDetails_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason == CloseReason.UserClosing && !apply)
+            if (e.CloseReason != CloseReason.UserClosing && !apply)
             {
                 button_Cancel_Click(null, null);
             }

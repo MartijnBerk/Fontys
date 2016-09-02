@@ -41,7 +41,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox_Name.Location = new System.Drawing.Point(68, 12);
             this.textBox_Name.Name = "textBox_Name";
-            this.textBox_Name.Size = new System.Drawing.Size(202, 22);
+            this.textBox_Name.Size = new System.Drawing.Size(218, 22);
             this.textBox_Name.TabIndex = 0;
             this.textBox_Name.TextChanged += new System.EventHandler(this.textBox_Name_TextChanged);
             // 
@@ -58,7 +58,7 @@
             // 
             this.button_Apply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_Apply.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button_Apply.Location = new System.Drawing.Point(194, 66);
+            this.button_Apply.Location = new System.Drawing.Point(210, 54);
             this.button_Apply.Name = "button_Apply";
             this.button_Apply.Size = new System.Drawing.Size(75, 30);
             this.button_Apply.TabIndex = 2;
@@ -70,7 +70,7 @@
             // 
             this.button_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button_Cancel.Location = new System.Drawing.Point(13, 66);
+            this.button_Cancel.Location = new System.Drawing.Point(13, 54);
             this.button_Cancel.Name = "button_Cancel";
             this.button_Cancel.Size = new System.Drawing.Size(75, 30);
             this.button_Cancel.TabIndex = 3;
@@ -80,8 +80,9 @@
             // 
             // button_Delete
             // 
+            this.button_Delete.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.button_Delete.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button_Delete.Location = new System.Drawing.Point(104, 70);
+            this.button_Delete.Location = new System.Drawing.Point(112, 58);
             this.button_Delete.Name = "button_Delete";
             this.button_Delete.Size = new System.Drawing.Size(75, 23);
             this.button_Delete.TabIndex = 4;
@@ -95,13 +96,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button_Cancel;
-            this.ClientSize = new System.Drawing.Size(282, 108);
+            this.ClientSize = new System.Drawing.Size(298, 96);
             this.Controls.Add(this.button_Delete);
             this.Controls.Add(this.button_Cancel);
             this.Controls.Add(this.button_Apply);
             this.Controls.Add(this.label_Name);
             this.Controls.Add(this.textBox_Name);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "UseCaseDetails";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Use Case Details";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UseCaseDetails_FormClosing);
             this.ResumeLayout(false);

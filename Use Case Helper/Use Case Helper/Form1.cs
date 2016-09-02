@@ -17,6 +17,8 @@ namespace Use_Case_Helper
 
         private Timer refreshTimer = new Timer();
 
+        private UseCaseDetails activeUseCaseDetails = null;
+
         public Form_Main()
         {
             InitializeComponent();
@@ -73,8 +75,14 @@ namespace Use_Case_Helper
 
             if (intersectUseCase != null)
             {
-                UseCaseDetails useCaseDetails = new UseCaseDetails(intersectUseCase);
-                useCaseDetails.Show();
+                if(activeUseCaseDetails != null)
+                {
+                    activeUseCaseDetails.Close();
+                }
+
+                activeUseCaseDetails = new UseCaseDetails(intersectUseCase);
+                activeUseCaseDetails.Location = new Point(this.Location.X + this.Width, this.Location.Y);
+                activeUseCaseDetails.Show();
             }
             else
             {
@@ -97,6 +105,14 @@ namespace Use_Case_Helper
                 useCaseList.Add(lastUseCase);
 
                 lastUseCase = null;
+            }
+        }
+
+        private void Form_Main_LocationChanged(object sender, EventArgs e)
+        {
+            if (activeUseCaseDetails != null)
+            {
+                activeUseCaseDetails.Location = new Point(this.Location.X + this.Width, this.Location.Y);
             }
         }
     }

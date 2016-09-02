@@ -33,7 +33,7 @@ namespace Use_Case_Helper
         private PointF spawnLocation;
 
         private static Font arialFont = new Font("Arial", 11);
-
+        
         public UseCase(float x, float y, float width, float height)
         {
             Name = "Use Case";
