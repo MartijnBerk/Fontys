@@ -35,9 +35,17 @@ namespace Use_Case_Helper
         {
             try
             {
-                foreach(UseCase usecase in useCaseList)
+                List<UseCase> readList = new List<UseCase>(useCaseList);
+                foreach(UseCase usecase in readList)
                 {
-                    usecase.Draw(e.Graphics);
+                    if (usecase.Destroy)
+                    {
+                        useCaseList.Remove(usecase);
+                    }
+                    else
+                    {
+                        usecase.Draw(e.Graphics);
+                    }
                 }
 
                 if(lastUseCase != null)
@@ -66,7 +74,7 @@ namespace Use_Case_Helper
             if (intersectUseCase != null)
             {
                 UseCaseDetails useCaseDetails = new UseCaseDetails(intersectUseCase);
-                useCaseDetails.ShowDialog();
+                useCaseDetails.Show();
             }
             else
             {

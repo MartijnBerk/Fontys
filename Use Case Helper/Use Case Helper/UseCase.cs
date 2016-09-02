@@ -9,6 +9,8 @@ namespace Use_Case_Helper
 {
     public class UseCase
     {
+        public bool Destroy { get; private set; }
+
         public PointF Center
         {
             get
@@ -35,6 +37,7 @@ namespace Use_Case_Helper
         public UseCase(float x, float y, float width, float height)
         {
             Name = "Use Case";
+            Destroy = false;
 
             location = new PointF(x, y);
             spawnLocation = location;
@@ -62,6 +65,11 @@ namespace Use_Case_Helper
         {
             size.Width = otherX - spawnLocation.X;
             size.Height = otherY - spawnLocation.Y;
+        }
+
+        public void DestroyUseCase()
+        {
+            Destroy = true;
         }
     }
 }

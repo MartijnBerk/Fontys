@@ -32,6 +32,7 @@
             this.label_Name = new System.Windows.Forms.Label();
             this.button_Apply = new System.Windows.Forms.Button();
             this.button_Cancel = new System.Windows.Forms.Button();
+            this.button_Delete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBox_Name
@@ -42,6 +43,7 @@
             this.textBox_Name.Name = "textBox_Name";
             this.textBox_Name.Size = new System.Drawing.Size(202, 22);
             this.textBox_Name.TabIndex = 0;
+            this.textBox_Name.TextChanged += new System.EventHandler(this.textBox_Name_TextChanged);
             // 
             // label_Name
             // 
@@ -74,6 +76,18 @@
             this.button_Cancel.TabIndex = 3;
             this.button_Cancel.Text = "Cancel";
             this.button_Cancel.UseVisualStyleBackColor = true;
+            this.button_Cancel.Click += new System.EventHandler(this.button_Cancel_Click);
+            // 
+            // button_Delete
+            // 
+            this.button_Delete.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.button_Delete.Location = new System.Drawing.Point(104, 70);
+            this.button_Delete.Name = "button_Delete";
+            this.button_Delete.Size = new System.Drawing.Size(75, 23);
+            this.button_Delete.TabIndex = 4;
+            this.button_Delete.Text = "Delete";
+            this.button_Delete.UseVisualStyleBackColor = true;
+            this.button_Delete.Click += new System.EventHandler(this.button_Delete_Click);
             // 
             // UseCaseDetails
             // 
@@ -82,12 +96,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.button_Cancel;
             this.ClientSize = new System.Drawing.Size(282, 108);
+            this.Controls.Add(this.button_Delete);
             this.Controls.Add(this.button_Cancel);
             this.Controls.Add(this.button_Apply);
             this.Controls.Add(this.label_Name);
             this.Controls.Add(this.textBox_Name);
             this.Name = "UseCaseDetails";
             this.Text = "Use Case Details";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UseCaseDetails_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -99,5 +115,6 @@
         private System.Windows.Forms.Label label_Name;
         private System.Windows.Forms.Button button_Apply;
         private System.Windows.Forms.Button button_Cancel;
+        private System.Windows.Forms.Button button_Delete;
     }
 }
