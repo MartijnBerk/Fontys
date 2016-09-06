@@ -64,7 +64,7 @@ namespace Use_Case_Helper
             size.Height = otherY - spawnLocation.Y;
         }
 
-        public void DestroyUseCase()
+        public void SetDestroy()
         {
             Destroy = true;
         }

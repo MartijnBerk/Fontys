@@ -56,7 +56,7 @@ namespace Use_Case_Helper
             {
                 if (MessageBox.Show(usecaseDeleteWarning, "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    usecase.DestroyUseCase();
+                    usecase.SetDestroy();
 
                     this.Close();
                 }

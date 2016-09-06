@@ -19,6 +19,9 @@ namespace Use_Case_Helper
         private UseCase lastUseCase = null;
         private List<UseCase> useCaseList = new List<UseCase>();
 
+        private Actor lastActor = null;
+        private List<Actor> actorList = new List<Actor>();
+
         private Timer refreshTimer = new Timer();
 
         private UseCaseDetails activeUseCaseDetails = null;
@@ -26,6 +29,8 @@ namespace Use_Case_Helper
         public Form_Main()
         {
             InitializeComponent();
+
+            comboBox_Element.Text = "Use Case";
 
             refreshTimer.Tick += RefreshTimer_Tick;
             refreshTimer.Interval = 33;
@@ -59,6 +64,25 @@ namespace Use_Case_Helper
                 {
                     lastUseCase.Draw(e.Graphics);
                 }
+
+                List<Actor> readActorList = new List<Actor>(actorList);
+                foreach(Actor actor in readActorList)
+                {
+                    if(actor.Destroy)
+                    {
+                        listBox_Entities.Items.Remove(actor.Name);
+                        actorList.Remove(actor);
+                    }
+                    else
+                    {
+                        actor.Draw(e.Graphics);
+                    }
+                }
+
+                if(lastActor != null)
+                {
+                    lastActor.Draw(e.Graphics);
+                }
             }
             catch(Exception exc)
             {
@@ -84,9 +108,13 @@ namespace Use_Case_Helper
                 {
                     OpenUseCaseDetails(intersectUseCase);
                 }
-                else
+                else if(comboBox_Element.Text == "Use Case")
                 {
                     lastUseCase = new UseCase(e.X, e.Y, 0.0f, 0.0f);
+                }
+                else if(comboBox_Element.Text == "Actor")
+                {
+                    lastActor = new Actor(e.X, e.Y, 0.0f, 0.0f);
                 }
             }
             catch(Exception exc)
@@ -101,6 +129,10 @@ namespace Use_Case_Helper
             {
                 lastUseCase.SetSize(e.X, e.Y);
             }
+            else if(lastActor != null)
+            {
+                lastActor.SetSize(e.X, e.Y);
+            }
         }
 
         private void pictureBox_Main_MouseUp(object sender, MouseEventArgs e)
@@ -111,6 +143,13 @@ namespace Use_Case_Helper
                 listBox_Entities.Items.Add(lastUseCase.Name);
 
                 lastUseCase = null;
+            }
+            else if(lastActor != null)
+            {
+                actorList.Add(lastActor);
+                listBox_Entities.Items.Add(lastActor.Name);
+
+                lastActor = null;
             }
         }
 
@@ -132,10 +171,18 @@ namespace Use_Case_Helper
 
                     if (MessageBox.Show(usecaseDeleteWarning, "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        UseCase usecase = useCaseList.Find(x => x.Name == name);
-                        if (usecase != null)
+                        Obj obj = useCaseList.Find(x => x.Name == name);
+                        if(obj != null)
                         {
-                            usecase.DestroyUseCase();
+                            obj.SetDestroy();
+                        }
+                        else
+                        {
+                            obj = actorList.Find(x => x.Name == name);
+                            if(obj != null)
+                            {
+                                obj.SetDestroy();
+                            }
                         }
                     }
                 }
