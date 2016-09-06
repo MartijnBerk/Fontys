@@ -12,6 +12,10 @@ namespace Use_Case_Helper
 {
     public partial class Form_Main : Form
     {
+        private static string usecaseDeleteWarning = "WARNING!\n" +
+                                              "You are about to DELETE this USE CASE!\n" +
+                                              "Are you sure?";
+
         private UseCase lastUseCase = null;
         private List<UseCase> useCaseList = new List<UseCase>();
 
@@ -42,6 +46,7 @@ namespace Use_Case_Helper
                 {
                     if (usecase.Destroy)
                     {
+                        listBox_Entities.Items.Remove(usecase.Name);
                         useCaseList.Remove(usecase);
                     }
                     else
@@ -63,30 +68,30 @@ namespace Use_Case_Helper
 
         private void pictureBox_Main_MouseDown(object sender, MouseEventArgs e)
         {
-            UseCase intersectUseCase = null;
-            foreach(UseCase useCase in useCaseList)
+            try
             {
-                if(useCase.HitBox.Contains(e.X, e.Y))
+                UseCase intersectUseCase = null;
+                foreach (UseCase useCase in useCaseList)
                 {
-                    intersectUseCase = useCase;
-                    break;
-                }
-            }
-
-            if (intersectUseCase != null)
-            {
-                if(activeUseCaseDetails != null)
-                {
-                    activeUseCaseDetails.Close();
+                    if (useCase.HitBox.Contains(e.X, e.Y))
+                    {
+                        intersectUseCase = useCase;
+                        break;
+                    }
                 }
 
-                activeUseCaseDetails = new UseCaseDetails(intersectUseCase);
-                activeUseCaseDetails.Location = new Point(this.Location.X + this.Width, this.Location.Y);
-                activeUseCaseDetails.Show();
+                if (intersectUseCase != null)
+                {
+                    OpenUseCaseDetails(intersectUseCase);
+                }
+                else
+                {
+                    lastUseCase = new UseCase(e.X, e.Y, 0.0f, 0.0f);
+                }
             }
-            else
+            catch(Exception exc)
             {
-                lastUseCase = new UseCase(e.X, e.Y, 0.0f, 0.0f);
+                MessageBox.Show(exc.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
 
@@ -103,6 +108,7 @@ namespace Use_Case_Helper
             if(lastUseCase != null)
             {
                 useCaseList.Add(lastUseCase);
+                listBox_Entities.Items.Add(lastUseCase.Name);
 
                 lastUseCase = null;
             }
@@ -113,6 +119,63 @@ namespace Use_Case_Helper
             if (activeUseCaseDetails != null)
             {
                 activeUseCaseDetails.Location = new Point(this.Location.X + this.Width, this.Location.Y);
+            }
+        }
+
+        private void listBox_Entities_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Delete && listBox_Entities.SelectedIndex >= 0)
+                {
+                    string name = (string)listBox_Entities.Items[listBox_Entities.SelectedIndex];
+
+                    if (MessageBox.Show(usecaseDeleteWarning, "Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        UseCase usecase = useCaseList.Find(x => x.Name == name);
+                        if (usecase != null)
+                        {
+                            usecase.DestroyUseCase();
+                        }
+                    }
+                }
+                else if (e.KeyCode == Keys.Enter)
+                {
+                    string name = (string)listBox_Entities.Items[listBox_Entities.SelectedIndex];
+                    UseCase usecase = useCaseList.Find(x => x.Name == name);
+
+                    OpenUseCaseDetails(usecase);
+                }
+            }
+            catch(Exception exc)
+            {
+                MessageBox.Show(exc.ToString(), "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        private void OpenUseCaseDetails(UseCase usecase)
+        {
+            try
+            {
+                if (activeUseCaseDetails != null)
+                {
+                    activeUseCaseDetails.Close();
+                }
+
+                activeUseCaseDetails = new UseCaseDetails(usecase);
+                activeUseCaseDetails.Location = new Point(this.Location.X + this.Width, this.Location.Y);
+
+                string oldName = usecase.Name;
+
+                if (activeUseCaseDetails.ShowDialog() == DialogResult.OK)
+                {
+                    int index = listBox_Entities.Items.IndexOf(oldName);
+                    listBox_Entities.Items[index] = usecase.Name;
+                }
+            }
+            catch(Exception exc)
+            {
+                throw exc;
             }
         }
     }

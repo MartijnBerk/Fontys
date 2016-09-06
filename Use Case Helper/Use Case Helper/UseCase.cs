@@ -7,49 +7,21 @@ using System.Threading.Tasks;
 
 namespace Use_Case_Helper
 {
-    public class UseCase
+    public class UseCase : Obj
     {
-        public bool Destroy { get; private set; }
+        private static int useCaseCount = 0;
 
-        public PointF Center
+        public UseCase(float x, float y, float width, float height) : base(x, y, width, height)
         {
-            get
-            {
-                return new PointF(location.X + (size.Width / 2.0f), location.Y + (size.Height / 2.0f));
-            }
-        }
-        public RectangleF HitBox
-        {
-            get
-            {
-                return new RectangleF(location, size);
-            }
-        }
-        public string Name { get; set; }
-
-        private PointF location;
-        private SizeF size;
-
-        private PointF spawnLocation;
-
-        private static Font arialFont = new Font("Arial", 11);
-        
-        public UseCase(float x, float y, float width, float height)
-        {
-            Name = "Use Case";
-            Destroy = false;
-
-            location = new PointF(x, y);
-            spawnLocation = location;
-
-            size = new SizeF(width, height);
+            Name = "Use Case " + useCaseCount;
+            useCaseCount += 1;
         }
 
         public void Draw(Graphics graphics)
         {
             try
             {
-                graphics.DrawEllipse(new Pen(Brushes.Black), new RectangleF(location, size));
+                graphics.DrawEllipse(new Pen(Brushes.Black), new RectangleF(Location, Size));
 
                 SizeF fontSize = graphics.MeasureString(Name, arialFont);
                 PointF centerLocation = new PointF(Center.X - (fontSize.Width / 2.0f), Center.Y - (fontSize.Height / 2.0f));
@@ -59,17 +31,6 @@ namespace Use_Case_Helper
             {
                 throw exc;
             }
-        }
-
-        public void SetSize(float otherX, float otherY)
-        {
-            size.Width = otherX - spawnLocation.X;
-            size.Height = otherY - spawnLocation.Y;
-        }
-
-        public void DestroyUseCase()
-        {
-            Destroy = true;
         }
     }
 }
